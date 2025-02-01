@@ -85,22 +85,11 @@ let
         owner = "dwhinham";
         repo = "kernel-surface-pro-11";
 
-        # latest commit currently doesn't boot
-        #rev = "fcc769be9eaa9823d55e98a28402104621fa6784";
-        #hash = "sha256-tIFflNcUaRGDI3LMLr1BS2m+7NZ7rV8Gob50OFQqxJ8=";
-        rev = "3c3b4ea67b523fc81db4b4793fbcb67cbd58208b";
-        hash = "sha256-ENDsbQZm+rqNnjQGMpWI7Ehy3cP5m7YkLiN8gSZDpiY=";
+        rev = "fcc769be9eaa9823d55e98a28402104621fa6784";
+        hash = "sha256-tIFflNcUaRGDI3LMLr1BS2m+7NZ7rV8Gob50OFQqxJ8=";
       };
 
-      kernelPatches = [  
-        {
-          name = "wifi";
-          patch = fetchpatch {
-            url = "https://github.com/dwhinham/kernel-surface-pro-11/commit/fcc769be9eaa9823d55e98a28402104621fa6784.patch";
-            hash = "sha256-NItJRJVY2Q38fjsgztpdO2cTltpuU2UDwCBybw7J7ng=";
-          };
-        }
-      ] ++ _kernelPatches;
+      kernelPatches = _kernelPatches;
 
       inherit configfile;
       config = configAttrs;
