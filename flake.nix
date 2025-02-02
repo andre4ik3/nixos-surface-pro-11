@@ -8,8 +8,8 @@
     in
       {
         nixosModules = rec {
-          surfacePro11 = ./modules/default.nix;
-          default = surfacePro11;
+          surface-pro-11 = ./modules/default.nix;
+          default = surface-pro-11;
         };
 
         packages = forAllSystems (system:

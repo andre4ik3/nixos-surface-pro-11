@@ -1,30 +1,33 @@
 { config, pkgs, lib, ... }:
 
 let
-  # TODO: is it redistributable? probably not, need a setup similar to asahi
-  #juno-firmware = pkgs.callPackage ./juno-firmware { };
-  juno-kernel = pkgs.callPackage ../packages/kernel {
+  # TODO: make a package overlay
+  denali-kernel = pkgs.callPackage ../packages/kernel {
     _kernelPatches = config.boot.kernelPatches;
   };
+  cfg = config.hardware.surfacePro11;
 in
 
 {
-  # TODO: make this into a real module, with configuration and things
+  imports = [
+    ./networking.nix
+    ./firmware.nix
+  ];
 
-  config = {
+  options.hardware.surfacePro11 = {
+    enable = (lib.mkEnableOption "hardware support for the Surface Pro 11") // { default = true; };
+    kernel.enable = (lib.mkEnableOption "the custom kernel needed to boot on the Surface Pro 11") // { default = cfg.enable; };
+  };
+
+  config = lib.mkIf cfg.kernel.enable {
     hardware.deviceTree = {
       enable = true;
       name = "qcom/x1e80100-microsoft-denali.dtb";
     };
 
-    #hardware.firmware = [ juno-firmware ];
-    boot.kernelPackages = juno-kernel;
+    boot.kernelPackages = denali-kernel;
 
     boot.crashDump.enable = lib.mkForce false; # doesn't work, prints kexec help message on boot
-
-    # prevents display from shutting off if decryption password isn't entered fast enough
-    # TODO: doesn't actually work...
-    #boot.initrd.extraFiles."lib/firmware/qcom/x1e80100/microsoft".source = "${juno-firmware}/lib/firmware/qcom/x1e80100/microsoft";
 
     # From nixos-hardware/microsoft/surface
     services.tlp.enable = false;
