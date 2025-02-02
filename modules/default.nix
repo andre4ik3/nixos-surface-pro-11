@@ -19,7 +19,7 @@ in
     kernel.enable = (lib.mkEnableOption "the custom kernel needed to boot on the Surface Pro 11") // { default = cfg.enable; };
   };
 
-  config = lib.mkIf cfg.kernel.enable {
+  config = lib.mkIf (cfg.enable && cfg.kernel.enable) {
     hardware.deviceTree = {
       enable = true;
       name = "qcom/x1e80100-microsoft-denali.dtb";

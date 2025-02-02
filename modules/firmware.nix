@@ -18,7 +18,7 @@ in
     };
   };
 
-  config = lib.mkIf cfg.firmware.enable {
+  config = lib.mkIf (cfg.enable && cfg.firmware.enable) {
     hardware.firmware = [ denali-firmware ];
     # prevents display from shutting off if decryption password isn't entered fast enough
     # TODO: doesn't actually work...

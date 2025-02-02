@@ -29,13 +29,23 @@ in
     };
   };
 
-  config = lib.mkMerge [
+  config = lib.mkIf cfg.enable (lib.mkMerge [
+    (lib.mkIf (cfg.wireless.enable || cfg.bluetooth.enable) {
+      assertions = [{
+        assertion = cfg.firmware.enable;
+        message = ''
+          Wi-Fi and Bluetooth support on the Surface Pro 11 require firmware.
+        '';
+      }];
+    })
+
     (lib.mkIf cfg.wireless.enable {
       services.udev.extraRules = ''
         ACTION=="add", SUBSYSTEM=="net", KERNELS=="0006:01:00.0", \
           RUN+="${pkgs.iproute2}/bin/ip link set dev wlP6p1s0 address ${cfg.wireless.macAddress}"
       '';
     })
+
     (lib.mkIf cfg.bluetooth.enable {
       services.udev.extraRules = ''
         ACTION=="add", SUBSYSTEM=="bluetooth", ENV{DEVTYPE}=="host" \
@@ -49,5 +59,5 @@ in
         '';
       };
     })
-  ];
+  ]);
 }
