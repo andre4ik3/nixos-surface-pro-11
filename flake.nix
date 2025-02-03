@@ -23,8 +23,10 @@
               modules = [ ./installer-iso.nix ];
               inherit pkgs;
             };
-          in {
+          in rec {
             installer-iso = installer-system.config.system.build.isoImage;
+            kernelPackages = pkgs.callPackage ./packages/kernel { };
+            kernel-config = kernelPackages.kernel.configfile;
           });
 
       };

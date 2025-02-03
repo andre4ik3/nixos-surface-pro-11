@@ -6,7 +6,7 @@
 }:
 
 let
-  linux-jhovold-pkg = { stdenv, lib, fetchFromGitHub, fetchpatch, buildLinux, ... }@args:
+  linux-jhovold-pkg = { stdenv, lib, fetchFromGitHub, buildLinux, ... }@args:
     (buildLinux (args // {
       inherit stdenv lib;
 
@@ -18,24 +18,18 @@ let
         # tracking: https://github.com/dwhinham/kernel-surface-pro-11/tree/wip/x1e80100-6.13-sp11
         owner = "dwhinham";
         repo = "kernel-surface-pro-11";
-        rev = "3c3b4ea67b523fc81db4b4793fbcb67cbd58208b";
-        hash = "sha256-ENDsbQZm+rqNnjQGMpWI7Ehy3cP5m7YkLiN8gSZDpiY=";
+        rev = "fcc769be9eaa9823d55e98a28402104621fa6784";
+        hash = "sha256-tIFflNcUaRGDI3LMLr1BS2m+7NZ7rV8Gob50OFQqxJ8=";
       };
 
-      kernelPatches = [
-        {
-          name = "wifi";
-          patch = fetchpatch {
-            url = "https://github.com/dwhinham/kernel-surface-pro-11/commit/fcc769be9eaa9823d55e98a28402104621fa6784.patch";
-            hash = "sha256-NItJRJVY2Q38fjsgztpdO2cTltpuU2UDwCBybw7J7ng=";
-          };
-        }
-      ] ++ _kernelPatches;
-      extraConfig = ''
-        IPV6_FOU_TUNNEL y
-      '';
+      kernelPatches = _kernelPatches;
 
       defconfig = ./config;
+      ignoreConfigErrors = true;
+      extraConfig = ''
+        FTRACE n
+        SPI_HID m
+      '';
     } // (args.argsOverride or {})));
   linux-jhovold = (callPackage linux-jhovold-pkg { });
 in lib.recurseIntoAttrs (linuxPackagesFor linux-jhovold)
