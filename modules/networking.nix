@@ -55,7 +55,7 @@ in
       systemd.services."hci-btaddress@" = {
         description = "HCI bluetooth address fix";
         script = ''
-          sleep 5 && yes | btmgmt -i %I public-addr "${cfg.bluetooth.macAddress}"
+          sleep 5 && yes | ${pkgs.bluez}/bin/btmgmt -i %I public-addr "${cfg.bluetooth.macAddress}"
         '';
       };
     })
