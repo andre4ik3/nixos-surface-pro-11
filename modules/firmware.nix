@@ -20,8 +20,5 @@ in
 
   config = lib.mkIf (cfg.enable && cfg.firmware.enable) {
     hardware.firmware = [ denali-firmware ];
-    # prevents display from shutting off if decryption password isn't entered fast enough
-    # TODO: doesn't actually work...
-    boot.initrd.extraFiles."lib/firmware/qcom/x1e80100/microsoft".source = "${denali-firmware}/lib/firmware/qcom/x1e80100/microsoft";
   };
 }
