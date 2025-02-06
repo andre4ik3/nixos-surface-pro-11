@@ -35,7 +35,7 @@ devicetrees, so that this workaround isn't needed.
 ## Documentation
 
 There is documentation on some of the requirements to set up things like the
-firmware and Bluetooth, available [here][./docs/README.md]. Read it carefully
+firmware and Bluetooth, available [here](./docs/README.md). Read it carefully
 before proceeding with installation, so you know what must be done in Windows
 to set those up.
 
