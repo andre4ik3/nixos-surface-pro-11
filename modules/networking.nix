@@ -40,6 +40,14 @@ in
     })
 
     (lib.mkIf cfg.wireless.enable {
+      networking.wireless.iwd = {
+        enable = true;
+        settings = {
+          # Bug workaround: https://bugzilla.kernel.org/show_bug.cgi?id=218733
+          General.ControlPortOverNL80211 = false;
+        };
+      };
+
       services.udev.extraRules = ''
         ACTION=="add", SUBSYSTEM=="net", KERNELS=="0006:01:00.0", \
           RUN+="${pkgs.iproute2}/bin/ip link set dev wlP6p1s0 address ${cfg.wireless.macAddress}"

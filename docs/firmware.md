@@ -58,4 +58,4 @@ possible attack vector for encrypted systems, as the firmware is sitting
 unencrypted in the EFI partition.
 
 
-[1]: https://github.com/dwhinham/linux-surface-pro-11/blob/main/grab_fw.bat
+[1]: https://github.com/dwhinham/linux-surface-pro-11/blob/main/sp11-grab-fw.bat

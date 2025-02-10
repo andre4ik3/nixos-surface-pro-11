@@ -18,8 +18,8 @@ let
         # tracking: https://github.com/dwhinham/kernel-surface-pro-11/tree/wip/x1e80100-6.13-sp11
         owner = "dwhinham";
         repo = "kernel-surface-pro-11";
-        rev = "fcc769be9eaa9823d55e98a28402104621fa6784";
-        hash = "sha256-tIFflNcUaRGDI3LMLr1BS2m+7NZ7rV8Gob50OFQqxJ8=";
+        rev = "81e7630cc416e88f541daba85c402ce2627071cd";
+        hash = "sha256-THjV2hg98OhN2XW3yo5bKc1vXBv/bZnEZGoHi/qnJ2g=";
       };
 
       kernelPatches = _kernelPatches;
