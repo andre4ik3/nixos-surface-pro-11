@@ -28,7 +28,7 @@
             installer-iso = installer-system.config.system.build.isoImage;
             kernelPackages = pkgs.callPackage ./packages/kernel { };
             kernel-config = kernelPackages.kernel.configfile;
+            firmware = pkgs.callPackage ./packages/firmware { };
           });
-
       };
 }
