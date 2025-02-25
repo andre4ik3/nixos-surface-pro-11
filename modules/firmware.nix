@@ -1,21 +1,15 @@
 { config, pkgs, lib, ... }:
 let
   cfg = config.hardware.surfacePro11;
-  denali-firmware = pkgs.callPackage ../packages/firmware { inherit (cfg.firmware) path; };
+  denali-firmware = pkgs.callPackage ../packages/firmware { };
 in
 {
+  imports = [
+    (lib.mkRemovedOptionModule [ "hardware" "surfacePro11" "firmware" "path" ] "The firmware is now downloaded and extracted automatically.")
+  ];
+
   options.hardware.surfacePro11.firmware = {
-    enable = lib.mkEnableOption "the firmware needed for the Surface Pro 11. Note that it must be supplied manually";
-    path = lib.mkOption {
-      type = lib.types.path;
-      description = ''
-        Path to the firmware for the Surface Pro 11.
-
-        Can be extracted with [this script][1].
-
-        [1]: https://github.com/dwhinham/linux-surface-pro-11/blob/main/grab_fw.bat
-      '';
-    };
+    enable = lib.mkEnableOption "the firmware needed for the Surface Pro 11";
   };
 
   config = lib.mkIf (cfg.enable && cfg.firmware.enable) {
