@@ -29,7 +29,6 @@ let
 
       # tracking: https://github.com/dwhinham/linux-surface-pro-11/blob/main/kernel_config_fragment
       extraConfig = ''
-        FTRACE n
         LOCALVERSION -jhovold
         LOCALVERSION_AUTO n
         ACPI y
@@ -46,6 +45,9 @@ let
         SURFACE_PLATFORM_PROFILE m
         SURFACE_HID m
         SURFACE_KBD m
+
+        # some small stuff not in upstream to fix compilation with NixOS kernel config
+        FTRACE n
         SPI_HID m
       '';
     } // (args.argsOverride or {})));

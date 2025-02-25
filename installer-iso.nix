@@ -7,6 +7,7 @@
   ];
 
   boot.supportedFilesystems.zfs = lib.mkForce false;
+  hardware.enableAllHardware = lib.mkForce false; # Missing kernel modules in the jhovold kernel
 
   # Ideally should PR hardware.devicetree support in the ISO to nixpkgs
   isoImage.contents = [{

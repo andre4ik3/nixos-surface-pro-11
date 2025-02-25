@@ -34,8 +34,10 @@ in
     services.iptsd.enable = true;
     hardware.sensor.iio.enable = true;
 
-    #boot.initrd.includeDefaultModules = false;
+    boot.initrd.includeDefaultModules = false;
     boot.initrd.availableKernelModules = [
+      # List of modules from:
+      # https://github.com/dwhinham/linux-surface-pro-11/blob/main/build.sh
       "tcsrcc-x1e80100"
       "phy-qcom-qmp-pcie"
       "phy-qcom-qmp-usb"
@@ -49,8 +51,22 @@ in
       "surface-aggregator-hub"
 
       # Without these, the NVMe drive won't be detected on boot.
+      "nvme"
       "nvmem_qcom_spmi_sdam"
       "pcie-qcom"
+
+      # additional stuff necessary to boot off USB for the installer
+      # and if the initrd (i.e. stage 1) goes wrong
+      "usb-storage"
+      "xhci-plat-hcd"
+      "usbhid"
+      "hid_generic"
+      "hid_microsoft"
+    ];
+
+    boot.initrd.kernelModules = [
+      # For LVM.
+      "dm_mod"
     ];
 
     boot.kernelParams = [
